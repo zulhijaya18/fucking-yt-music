@@ -51,7 +51,6 @@ app.get('/new-yt-music/video/:videoId', async (req, res) => {
     downloadStream.pipe(res);
 });
 
-
 app.get('/new-yt-music/stream/:videoId', async (req, res) => {
   https.get('https://mbr-productions.my.id/new-yt-music-populer/add.php?video_id=' + req.params.videoId);
   let info = await ytdl.getInfo('https://www.youtube.com/watch?v='+req.params.videoId);
@@ -75,18 +74,6 @@ app.get('/new-yt-music/stream/:videoId', async (req, res) => {
   https.get(url, function(data){
     data.pipe(res);
   });
-
-  // downloadStream
-  //   .on("downloadProgress", ({ transferred, total, percent }) => {
-  //     const percentage = Math.round(percent * 100);
-  //     console.error(`progress: ${transferred}/${total} (${percentage}%)`);
-  //   })
-  //   .on("error", (error) => {
-  //     console.error(`Download failed: ${error.message}`);
-  //   });
-
-
-  // downloadStream.pipe(res);
 });
 
 app.get('/new-yt-music/info/:videoId', async (req, res) => {
@@ -96,4 +83,6 @@ app.get('/new-yt-music/info/:videoId', async (req, res) => {
 
 
 
-app.listen(process.env.PORT, () => {});
+app.listen(process.env.PORT || 3000, () => {
+  console.log('scucces');
+});
