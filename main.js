@@ -86,3 +86,20 @@ app.get('/new-yt-music/info/:videoId', async (req, res) => {
 app.listen(process.env.PORT || 3000, () => {
   console.log('scucces');
 });
+
+app.get('/new-yt-music/play/:videoId', async (req, res) => {
+  let info = await ytdl.getInfo('https://www.youtube.com/watch?v='+req.params.videoId);
+  let url;
+  info.formats.forEach(format => {
+      if (format.itag == '249') {
+          url = format.url;
+          if(format.audioCodec != null){
+            console.log(format);
+          }
+      }
+  });
+
+  https.get(url, function(data){
+    data.pipe(res);
+  });
+});
