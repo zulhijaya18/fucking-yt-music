@@ -8,8 +8,11 @@ const usetube = require('usetube');
 const express = require('express');
 const app = express();
 const got = require("got");
-var https = require('https');
+// var https = require('https');
 // const stream = require('stream');
+
+var expressWs = require('express-ws')(app);
+
 
 app.get('/new-yt-music/search/:keyword', async (req, res) => {
     let search = await usetube.searchVideo(req.params.keyword);
@@ -18,7 +21,7 @@ app.get('/new-yt-music/search/:keyword', async (req, res) => {
 });
 
 app.get('/new-yt-music/video/:videoId', async (req, res) => {
-    https.get('https://mbr-productions.my.id/new-yt-music-populer/add.php?video_id=' + req.params.videoId);
+    // https.get('https://mbr-productions.my.id/new-yt-music-populer/add.php?video_id=' + req.params.videoId);
     let info = await ytdl.getInfo('https://www.youtube.com/watch?v='+req.params.videoId);
     let url = '';
     let fileSize = 0;
@@ -30,6 +33,8 @@ app.get('/new-yt-music/video/:videoId', async (req, res) => {
             fileSize = format.contentLength;
         }
     });
+
+
     
     const downloadStream = got.stream(url);
 
@@ -52,7 +57,7 @@ app.get('/new-yt-music/video/:videoId', async (req, res) => {
 });
 
 app.get('/new-yt-music/stream/:videoId', async (req, res) => {
-  https.get('https://mbr-productions.my.id/new-yt-music-populer/add.php?video_id=' + req.params.videoId);
+  // https.get('https://mbr-productions.my.id/new-yt-music-populer/add.php?video_id=' + req.params.videoId);
   let info = await ytdl.getInfo('https://www.youtube.com/watch?v='+req.params.videoId);
   let url = '';
   let fileSize = 0;

@@ -11,13 +11,17 @@
   "dependencies": {
     "express": "^4.17.1",
     "express-rate-limit": "^5.5.1",
+    "express-ws": "^5.0.2",
     "get-yt-thumbnail": "^1.0.0",
     "got": "^11.8.2",
     "stream": "^0.0.2",
     "usetube": "^2.1.4",
     "video-thumbnail-url": "^1.0.1",
+    "websocket": "^1.0.34",
+    "websocket-stream": "^5.5.2",
+    "ws": "^8.8.1",
     "yt-thumb": "^1.0.0",
-    "ytdl-core": "^4.9.1",
+    "ytdl-core": "^4.11.2",
     "ytsr": "^3.5.3"
   }
 }
