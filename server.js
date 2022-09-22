@@ -1,6 +1,6 @@
 const WebSocketServer = require('ws').Server
 const websocketStream = require('websocket-stream')
-const wss = new WebSocketServer({port: 8098})
+const wss = new WebSocketServer({port: process.env.PORT || 3000})
 const fs = require('fs')
 const ytdl = require('ytdl-core');
 const https = require('https');

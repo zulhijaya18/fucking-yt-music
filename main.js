@@ -1,67 +1,131 @@
-const fs = require('fs');
-const ytdl = require('ytdl-core');
-const usetube = require('usetube');
-// const ytsr = require('ytsr');
-// const getThumb = require('video-thumbnail-url');
-// import getYtThumbnail from 'get-yt-thumbnail';
-// const fetchThumbnail = require("yt-thumb");
-const express = require('express');
-const app = express();
-const got = require("got");
-// var https = require('https');
-// const stream = require('stream');
+// const fs = require('fs');
+// const ytdl = require('ytdl-core');
+// const usetube = require('usetube');
+// // const ytsr = require('ytsr');
+// // const getThumb = require('video-thumbnail-url');
+// // import getYtThumbnail from 'get-yt-thumbnail';
+// // const fetchThumbnail = require("yt-thumb");
+// const express = require('express');
+// const app = express();
+// const got = require("got");
+// // var https = require('https');
+// // const stream = require('stream');
 
-var expressWs = require('express-ws')(app);
+// var expressWs = require('express-ws')(app);
 
 
-app.get('/new-yt-music/search/:keyword', async (req, res) => {
-    let search = await usetube.searchVideo(req.params.keyword);
-    res.send(search.videos);
-    res.end();
-});
+// app.get('/new-yt-music/search/:keyword', async (req, res) => {
+//     let search = await usetube.searchVideo(req.params.keyword);
+//     res.send(search.videos);
+//     res.end();
+// });
 
-app.get('/new-yt-music/video/:videoId', async (req, res) => {
-    // https.get('https://mbr-productions.my.id/new-yt-music-populer/add.php?video_id=' + req.params.videoId);
-    let info = await ytdl.getInfo('https://www.youtube.com/watch?v='+req.params.videoId);
-    let url = '';
-    let fileSize = 0;
-    let fileName = req.params.videoId+'.webm';
-    fs.writeFileSync('info.txt', JSON.stringify(info));
-    info.formats.forEach(format => {
-        if (format.itag == '249') {
-            url = format.url;
-            fileSize = format.contentLength;
-        }
-    });
+// app.get('/new-yt-music/video/:videoId', async (req, res) => {
+//     // https.get('https://mbr-productions.my.id/new-yt-music-populer/add.php?video_id=' + req.params.videoId);
+//     let info = await ytdl.getInfo('https://www.youtube.com/watch?v='+req.params.videoId);
+//     let url = '';
+//     let fileSize = 0;
+//     let fileName = req.params.videoId+'.webm';
+//     fs.writeFileSync('info.txt', JSON.stringify(info));
+//     info.formats.forEach(format => {
+//         if (format.itag == '249') {
+//             url = format.url;
+//             fileSize = format.contentLength;
+//         }
+//     });
 
 
     
-    const downloadStream = got.stream(url);
+//     const downloadStream = got.stream(url);
 
-    downloadStream
-      .on("downloadProgress", ({ transferred, total, percent }) => {
-        const percentage = Math.round(percent * 100);
-        console.error(`progress: ${transferred}/${total} (${percentage}%)`);
-      })
-      .on("error", (error) => {
-        console.error(`Download failed: ${error.message}`);
-      });
+//     downloadStream
+//       .on("downloadProgress", ({ transferred, total, percent }) => {
+//         const percentage = Math.round(percent * 100);
+//         console.error(`progress: ${transferred}/${total} (${percentage}%)`);
+//       })
+//       .on("error", (error) => {
+//         console.error(`Download failed: ${error.message}`);
+//       });
 
-      res.writeHead(200, {
-        'Content-Type': 'audio/webm',
-        'Content-Length': fileSize,
-        'Content-Disposition': 'attachment; filename='+fileName
-      });
+//       res.writeHead(200, {
+//         'Content-Type': 'audio/webm',
+//         'Content-Length': fileSize,
+//         'Content-Disposition': 'attachment; filename='+fileName
+//       });
 
-    downloadStream.pipe(res);
-});
+//     downloadStream.pipe(res);
+// });
 
-app.get('/new-yt-music/stream/:videoId', async (req, res) => {
-  // https.get('https://mbr-productions.my.id/new-yt-music-populer/add.php?video_id=' + req.params.videoId);
-  let info = await ytdl.getInfo('https://www.youtube.com/watch?v='+req.params.videoId);
+// app.get('/new-yt-music/stream/:videoId', async (req, res) => {
+//   // https.get('https://mbr-productions.my.id/new-yt-music-populer/add.php?video_id=' + req.params.videoId);
+//   let info = await ytdl.getInfo('https://www.youtube.com/watch?v='+req.params.videoId);
+//   let url = '';
+//   let fileSize = 0;
+//   let fileName = req.params.videoId+'.webm';
+//   fs.writeFileSync('info.txt', JSON.stringify(info));
+//   info.formats.forEach(format => {
+//       if (format.itag == '249') {
+//           url = format.url;
+//           fileSize = format.contentLength;
+//       }
+//   });
+  
+//   res.writeHead(200, {
+//     'Content-Type': 'audio/webm',
+//     'Content-Length': fileSize,
+//     'Content-Disposition': 'attachment; filename='+fileName
+//   });
+
+//   https.get(url, function(data){
+//     data.pipe(res);
+//   });
+// });
+
+// app.get('/new-yt-music/info/:videoId', async (req, res) => {
+//   let info = await ytdl.getInfo('https://www.youtube.com/watch?v='+req.params.videoId);
+//   res.send(info.videoDetails);
+// });
+
+
+
+// app.listen(process.env.PORT || 3000, () => {
+//   console.log('scucces');
+// });
+
+// app.get('/new-yt-music/play/:videoId', async (req, res) => {
+//   let info = await ytdl.getInfo('https://www.youtube.com/watch?v='+req.params.videoId);
+//   let url;
+//   info.formats.forEach(format => {
+//       if (format.itag == '249') {
+//           url = format.url;
+//           if(format.audioCodec != null){
+//             console.log(format);
+//           }
+//       }
+//   });
+
+//   https.get(url, function(data){
+//     data.pipe(res);
+//   });
+// });
+
+
+
+const WebSocketServer = require('ws').Server
+const websocketStream = require('websocket-stream')
+const wss = new WebSocketServer({port: process.env.PORT || 3000})
+const fs = require('fs')
+const ytdl = require('ytdl-core');
+const https = require('https');
+
+wss.on('connection', async function (ws, req) {
+    const stream = websocketStream(ws)
+    
+    let videoId = req.url.split('/')[1];
+    console.log('opened connection to '+ videoId);
+
+  let info = await ytdl.getInfo('https://www.youtube.com/watch?v='+videoId);
   let url = '';
-  let fileSize = 0;
-  let fileName = req.params.videoId+'.webm';
   fs.writeFileSync('info.txt', JSON.stringify(info));
   info.formats.forEach(format => {
       if (format.itag == '249') {
@@ -69,42 +133,8 @@ app.get('/new-yt-music/stream/:videoId', async (req, res) => {
           fileSize = format.contentLength;
       }
   });
-  
-  res.writeHead(200, {
-    'Content-Type': 'audio/webm',
-    'Content-Length': fileSize,
-    'Content-Disposition': 'attachment; filename='+fileName
-  });
 
   https.get(url, function(data){
-    data.pipe(res);
+    data.pipe(stream)
   });
-});
-
-app.get('/new-yt-music/info/:videoId', async (req, res) => {
-  let info = await ytdl.getInfo('https://www.youtube.com/watch?v='+req.params.videoId);
-  res.send(info.videoDetails);
-});
-
-
-
-app.listen(process.env.PORT || 3000, () => {
-  console.log('scucces');
-});
-
-app.get('/new-yt-music/play/:videoId', async (req, res) => {
-  let info = await ytdl.getInfo('https://www.youtube.com/watch?v='+req.params.videoId);
-  let url;
-  info.formats.forEach(format => {
-      if (format.itag == '249') {
-          url = format.url;
-          if(format.audioCodec != null){
-            console.log(format);
-          }
-      }
-  });
-
-  https.get(url, function(data){
-    data.pipe(res);
-  });
-});
+})
